@@ -1,0 +1,84 @@
+﻿@model СentralLibrary_Db.Models.IndexViewModel
+@Styles.Render("~/Content/SiteItem.css")
+@section scripts {
+    @Scripts.Render("~/Scripts/Effect.js")
+}
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2 class="text-center">@ViewBag.Title your account and settings</h2>
+<hr />
+<div class="container">
+    <div class="card-deck">
+        <div class="card">
+            <div class="item">
+                <a href=@Url.Action("ChangePassword", "Manage")><img style=" height:400px;" class="card-img-top" src="~/Content/Images/Safely.png" alt="Create text"></a>
+            </div>
+            <div class="border-effect bg-warning"></div>
+            <div class="card-body">
+                @if (Model.HasPassword)
+                {
+                    <h4 class="card-title text-center">@Html.ActionLink("Change your password", "ChangePassword", "Manage", new { @class = "btn btn-secondary btn-lg text-center" })</h4>
+
+                }
+                else
+                {
+                    <h4 class="card-title text-center">@Html.ActionLink("Create", "SetPassword", "Manage", new { @class = "btn btn-secondary btn-lg text-center" })</h4>
+                }
+                <p class="card-text text-center">You have the opportunity to change your password.</p>
+            </div>
+        </div>
+        @if (User.IsInRole("user"))
+        {
+            <div class="card">
+                <div class="item">
+                    <a href="@Url.Action("ManageLibrary", "Manage")"><img class="card-img-top" style=" height:400px;" src="~/Content/Images/Сhildren reading books.png" alt="All files"></a>
+                </div>
+                <div class="border-effect bg-warning"></div>
+                <div class="card-body ">
+                    <h4 class="card-title text-center">@Html.ActionLink("Manage Library", "ManageLibrary", "Manage", new { @class = "btn btn-secondary btn-lg " })</h4>
+                    <p class="card-text text-center">You can view all your books.</p>
+                </div>
+            </div>
+        }
+        @if (User.IsInRole("admin"))
+        {
+            <div class="card">
+                <div class="item">
+                    <a href="@Url.Action("ManageModerator", "Manage")"><img class="card-img-top" style=" height:400px;" src="~/Content/Images/Books ladder.png" alt="All files"></a>
+                </div>
+                <div class="border-effect bg-warning"></div>
+                <div class="card-body ">
+                    <h4 class="card-title text-center">@Html.ActionLink("Manage Moderator", "ManageModerator", "Manage", new { @class = "btn btn-secondary btn-lg " })</h4>
+                    <p class="card-text text-center">You can view all your books.</p>
+                </div>
+            </div>
+        }
+        @if (User.IsInRole("admin") || User.IsInRole("moderator"))
+        {
+            <div class="card">
+                <div class="item">
+                    <a href="@Url.Action("AddBook", "Manage")"><img class="card-img-top" style=" height:400px;" src="~/Content/Images/owl-book.png" alt="All files"></a>
+                </div>
+                <div class="border-effect bg-warning"></div>
+                <div class="card-body ">
+                    <h4 class="card-title text-center">@Html.ActionLink("A New Book", "AddBook", "Manage", new { @class = "btn btn-secondary btn-lg " })</h4>
+                    <p class="card-text text-center">You can add new a book in library.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="item">
+                    <a href="@Url.Action("AllUsers", "Manage")"><img class="card-img-top" style=" height:400px;" src="~/Content/Images/library_drawing_readers.jpg" alt="All files"></a>
+                </div>
+                <div class="border-effect bg-warning"></div>
+                <div class="card-body ">
+                    <h4 class="card-title text-center">@Html.ActionLink("All Users", "AllUsers", "Manage", new { @class = "btn btn-secondary btn-lg " })</h4>
+                    <p class="card-text text-center">You can add new a book in library.</p>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+<hr />

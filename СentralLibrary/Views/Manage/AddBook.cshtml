@@ -1,0 +1,64 @@
+﻿@model СentralLibrary_Db.Models.CreateBookViewModels
+@Styles.Render("~/Content/Register.css")
+@using (Html.BeginForm("AddBook", "Home", FormMethod.Post, new { @class = "form-horizontal ", enctype = "multipart/form-data", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4 class="text-center">Add a new Book</h4>
+    <hr />
+    @Html.ValidationSummary()
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Name, new { @class = "col-sm-3 control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Author, new { @class = "col-sm-3 control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.Author, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Genre, new { @class = "col-sm-3 control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.Genre, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Publication, new { @class = "col-sm-3 control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.Publication, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.CountOfBooks, new { @class = "col-sm-3 control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.CountOfBooks, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.DateOfPublication, new { @class = "col-sm-3  control-label" })
+        <div class=" cols col-sm-9">
+            <div class="input-group ">
+                <span class="input-group-addon"><i class="" aria-hidden="true"></i></span>
+                @Html.TextBoxFor(m => m.DateOfPublication, new { @class = "form-control datepicker", @type = "date" })
+            </div>
+        </div>
+    </div>
+    <div class="form-grou row">
+        <div class=" editor-label col-sm-3">File image</div>
+        <div class=" editor-field col-sm-9">
+            <input class="form-group btn btn-info" type="file" name="uploadImage" />
+        </div>
+    </div>
+
+    <div class="form-group ">
+        <div class="justify-content-center">
+            <button type="submit" class="btn  col-sm-12 btn-success" value="Publication a book">Publication a book</button>
+        </div>
+    </div>
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

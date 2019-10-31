@@ -1,0 +1,38 @@
+﻿@Styles.Render("~/Content/SiteItem.css")
+@section scripts {
+    @Scripts.Render("~/Scripts/Effect.js")
+}
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2 class="text-center mb-5">Control of moderators</h2>
+<hr />
+<div class="container">
+    <div class="card-deck">
+        <div class="card">
+            <div class="item">
+                <a href=@Url.Action("AddModerator", "Account")><img style=" height:500px;" class="card-img-top" src="~/Content/Images/Angry woman.png" alt="Create text"></a>
+            </div>
+            <div class="border-effect bg-warning"></div>
+            <div class="card-body">
+                <h4 class="card-title text-center">@Html.ActionLink("Add a new moderator", "AddModerator", "Account", new { @class = "btn btn-secondary btn-lg text-center" })</h4>
+                <p class="card-text text-center">You have the opportunity add a new moderator.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="item">
+                <a href="@Url.Action("DelModerator", "Account")"><img class="card-img-top" style=" height:500px;" src="~/Content/Images/Angry-businessman.png" alt="All files"></a>
+            </div>
+            <div class="border-effect bg-warning"></div>
+            <div class="card-body ">
+                <h4 class="card-title text-center">@Html.ActionLink("Delete a moderator", "DelModerator", "Account", new { @class = "btn btn-secondary btn-lg " })</h4>
+                <p class="card-text text-center">You can remove a moderator.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-2 mt-5 float-right">
+    @Html.ActionLink("Return", "Index", "Manage", null, new { @class = "btn btn-warning btn-lg btn-block login-button" })
+</div>
+

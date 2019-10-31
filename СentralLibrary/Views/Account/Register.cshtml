@@ -1,0 +1,96 @@
+﻿@model СentralLibrary_Db.Models.RegisterViewModel
+@Styles.Render("~/Content/Register.css")
+
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+<h2>Registration</h2>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Email, new { @class = "col-sm-3 control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-3  control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Surname, new { @class = "col-sm-3  control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Gender, new { @class = "col-sm-3  control-label" })
+        <div class="col-sm-6">
+            <div class="input-group">
+                <div class="">
+                        @Html.RadioButtonFor(m => m.Gender,"Woman", new { @class = "" })
+                        <span>Woman</span><br />    
+                        @Html.RadioButtonFor(m => m.Gender, "Man", new { @class = "" })
+                        <span>Man</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-sm-3  control-label" })
+        <div class=" cols col-sm-9">
+            <div class="input-group ">
+                <span class="input-group-addon"><i class="" aria-hidden="true"></i></span>
+                @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control datepicker", @type = "date" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-sm-3 control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Country, new { @class = "col-sm-3 control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.Country, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Sity, new { @class = "col-sm-3 control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.Sity, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.StreetAddress, new { @class = "col-sm-3  control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.StreetAddress, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Password, new { @class = "col-sm-3  control-label" })
+        <div class="col-sm-9">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-3 control-label" })
+        <div class="col-sm-9">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="justify-content-center">
+            <input type="submit" class=" btn text-center col-sm-12 btn-primary btn-block" value="Register" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

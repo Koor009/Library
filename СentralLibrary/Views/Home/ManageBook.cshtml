@@ -1,0 +1,60 @@
+﻿@model СentralLibrary_Db.Models.Book
+@Styles.Render("~/Content/Register.css")
+
+@using (Html.BeginForm("ManageBook", "Home", FormMethod.Post, new { @class = "form-horizontal ", role = "form", enctype = "multipart/form-data" }))
+{
+    <input type="hidden" id="Id" name="Id" value=@Model.Id />
+    @Html.AntiForgeryToken()
+    <h4>Update a Book.</h4>
+    <hr />
+    @Html.ValidationSummary()
+
+    <div class="form-group row">
+        @Html.Label("Name", "Name", new { @class = "col-sm-3 control-label" })
+        <div class="col-sm-9">
+            @Html.TextBox("Name", Model.Name, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.Label("Author", "Author", new { @class = "col-sm-3  control-label" })
+        <div class="col-sm-9">
+            @Html.TextBox("Author", Model.Author, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.Label("Genre", "Genre", new { @class = "col-sm-3  control-label" })
+        <div class="col-sm-9">
+            @Html.TextBox("Genre", Model.Genre, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.Label("Publication", "Publication", new { @class = "col-sm-3  control-label" })
+        <div class="col-sm-9">
+            @Html.TextBox("Publication", Model.Publication, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.Label("CountOfBooks", "Count of books", new { @class = "col-sm-3  control-label" })
+        <div class="col-sm-9">
+            @Html.TextBox("CountOfBooks", Model.CountOfBooks, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.Label("DateOfPublication", "Date of publication", new { @class = "col-sm-3  control-label" })
+        <div class="col-sm-9">
+            @Html.TextBox("DateOfPublication", Model.DateOfPublication.ToShortDateString(), new { @class = "form-control", @placeholder = "dd/mm/yyyy" })
+        </div>
+    </div>
+    <div class="form-grou row">
+        <div class=" editor-label col-sm-3">File image</div>
+        <div class=" editor-field col-sm-9">
+            <input class="form-group btn btn-info" type="file" name="uploadImage" />
+        </div>
+    </div>
+
+    <div class="form-group ">
+        <div class="justify-content-center">
+            <button type="submit" class="btn  col-sm-12 btn-success" value="Publication a book">Publication a book</button>
+        </div>
+    </div>
+}

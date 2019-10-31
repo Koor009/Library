@@ -1,0 +1,82 @@
+﻿@model PagedList.IPagedList<СentralLibrary_Db.Models.ApplicationUser>
+@Styles.Render("~/Content/PagedList.css")
+@using PagedList.Mvc;
+<div class="container">
+
+    <div class="row mb-5">
+        <h2 class="text-center col-sm-12 col-lg-4 offset-lg-4  ">Users</h2>
+        <div class="col-lg-4 col-sm-12 ">
+            @using (Html.BeginForm(actionName: "AllUsers", controllerName: "Home", method: FormMethod.Get, htmlAttributes: new { @class = "form-inline" }))
+            {
+                <div class="form-group ">
+                    @Html.TextBox(name: "search", value: null, htmlAttributes: new { @class = "form-control mr-sm-2", placeholder = "Search by surname" })
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="my-3">
+        @using (Html.BeginForm("Books", "Home", FormMethod.Get, new { @class = "form-inline offset-md-8 selectpicker" }))
+        {
+            <input type="hidden" id="page" name="page" value="@ViewBag.Page" />
+            <input type="hidden" id="search" name="search" value="@ViewBag.Search" />
+            @Html.DropDownList(
+                "sort",
+                new MultiSelectList(new string[] { "name A-Z", "name A-Z", "surname A-Z","surname Z-A", "email A-Z", "email Z-A" }),
+                new { @class= "selectpicker" })
+            <button type="submit" class="btn btn-info btn-sm">Sort</button>
+
+        }
+    </div>
+    <table class="table table-hover">
+        <thead class="table-dark table-hover">
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th>PhoneNumber</th>
+                <th>Status blocked user</th>
+            </tr>
+        </thead>
+
+
+        <tbody class="table-warning ">
+            @foreach (var user in Model)
+            {
+            <tr>
+                <td>@user.FirstName</td>
+                <td>@user.Surname</td>
+                <td>@user.Gender</td>
+                <td>@user.Email</td>
+                <td>@user.PhoneNumber</td>
+                @if (user.StatusBlockedUser == true)
+                {
+                    using (Html.BeginForm("UnblockUser", "Manage", FormMethod.Post, new { @class = "form-inline" }))
+                    {
+                        <td>
+                            <input type="hidden" name="userId" id="userId" value="@user.Id" />
+                            <button type="submit" class="btn btn-outline-success">Unblock</button>
+                        </td>
+                    }
+                }
+                @if (user.StatusBlockedUser == false)
+                {
+                    using (Html.BeginForm("BlockUser", "Manage", FormMethod.Post, new { @class = "form-inline" }))
+                    {
+                        <td>
+                            <input type="hidden" name="userId" id="userId" value="@user.Id" />
+                            <button type="submit" class="btn btn-outline-success">Block</button>
+                        </td>
+                    }
+                }
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="text-center align-bottom justify-content-center container text-black-50 mb-4 mt-5">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) from @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("AllUsers", new { page, sort = ViewBag.Sort }))
+</div>

@@ -1,0 +1,95 @@
+﻿@model  PagedList.IPagedList<СentralLibrary_Db.Models.Registration>
+@Styles.Render("~/Content/PagedList.css")
+@using PagedList.Mvc;
+<div class="container">
+    <div class="row mb-5">
+        <h2 class="text-center col-sm-12 col-lg-4 offset-lg-4  ">Personal Books</h2>
+        <div class="col-lg-4 col-sm-12 ">
+            @using (Html.BeginForm(actionName: "ManageLibrary", controllerName: "Manage", method: FormMethod.Get, htmlAttributes: new { @class = "form-inline" }))
+            {
+                <div class="form-group ">
+                    @Html.TextBox(name: "search", value: null, htmlAttributes: new { @class = "form-control mr-sm-2", placeholder = "Search" })
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div>
+        @using (Html.BeginForm("ManageLibrary", "Manage", FormMethod.Get, new { @class = "form-inline offset-md-8 selectpicker" }))
+        {
+            <input type="hidden" id="page" name="page" value="@ViewBag.Page" />
+            <input type="hidden" id="search" name="search" value="@ViewBag.Search" />
+            @Html.DropDownList(
+                "sort",
+                new MultiSelectList(new string[] { "name A-Z", "name Z-A", "author A-Z", "author Z-A", "registration old-new", "registration new-old" }),
+                new { @class= "selectpicker" })
+            <button type="submit" class="btn btn-info btn-sm">Sort</button>
+
+        }
+    </div>
+    <table class="table table-hover mt-4">
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    @if (book.GetBook.Image != null)
+                    {
+                        <td>
+                            @Html.Raw("<img style='width:140px; height:175px;' src=\"data:image/jpeg;base64,"
+                                                + Convert.ToBase64String(book.GetBook.Image) + "\" />")
+                        </td>
+                    }
+                    else
+                    {
+                        <td><img style="width:140px; height:140px;" src="~/Content/Images/book.jpg" /> </td>
+                    }
+
+                    <td>
+                        <div>
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <td>@book.GetBook.Name</td>
+                                </tr>
+                                <tr>
+                                    <th>Author</th>
+                                    <td>@book.GetBook.Author</td>
+                                </tr>
+                                <tr>
+                                    <th>Date registration</th>
+                                    <td>@book.Date.ToShortDateString()</td>
+                                </tr>
+                                <tr>
+                                    <th>Return a book to date or fine:</th>
+                                    <td>@book.Date.AddMonths(1)</td>
+                                </tr>
+                                <tr>
+                                    @if (User.IsInRole("user"))
+                                    {
+                                        <td class="text-center align-content-center" colspan="2">
+                                            @using (Html.BeginForm("BookUnregistrationPerPerson", "Manage", FormMethod.Post))
+                                            {
+                                                <input type="hidden" id="bookId" name="bookId" value=@book.GetBook.Id>
+                                                <input type="hidden" id="registrationId" name="registrationId" value=@book.Id>
+                                                <button type="submit" class="btn btn-primary">Unregistration</button>
+                                            }
+                                        </td>
+                                    }
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="col-sm-2 my-5  float-right">
+    @Html.ActionLink("Return", "Index", "Manage", null, new { @class = "btn btn-warning btn-lg btn-block login-button" })
+</div>
+<div class="text-center align-bottom justify-content-center container text-black-50 mb-4 mt-5">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) from @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("ManageLibrary", new { page, sort = ViewBag.Sort }))
+</div>

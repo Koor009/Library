@@ -1,0 +1,45 @@
+﻿@model  СentralLibrary_Db.Models.AddModeratorViewModel
+@Styles.Render("~/Content/Register.css")
+
+<h2 class="text-center">Add a new moderator</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h2>Registration</h2>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Email, new { @class = "col-sm-3 control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Password, new { @class = "col-sm-3  control-label" })
+        <div class="col-sm-9">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-3 control-label" })
+        <div class="col-sm-9">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="justify-content-center">
+            <input type="submit" class=" btn text-center col-sm-12 btn-primary btn-block" value="Register" />
+        </div>
+        
+    </div>
+}
+    <div class="col-sm-2 float-right">
+        @Html.ActionLink("Return", "ManageModerator", "Manage", null, new { @class = "btn btn-warning btn-lg btn-block login-button" })
+    </div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
